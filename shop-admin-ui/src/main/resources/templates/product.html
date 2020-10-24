@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="fragments/general.html :: head"></head>
 
 <body class="bg-light">
@@ -19,12 +19,16 @@
                 <form id="form" th:action="@{/product/update}" method="post" th:object="${product}">
                     <input th:type="hidden" th:field="*{id}">
                     <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" class="form-control" th:field="*{name}" placeholder="Enter title" required>
+                        <label>Name</label>
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Enter name" required>
                     </div>
                     <div class="form-group">
                         <label>Prise</label>
                         <input type="number" class="form-control" th:field="*{prise}" placeholder="Enter prise" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" class="form-control" th:field="*{description}" placeholder="Enter description">
                     </div>
                 </form>
             </div>

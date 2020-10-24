@@ -1,8 +1,10 @@
 package ru.fruzbuka.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,7 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 
 //@EnableWebSecurity(debug = true)
 @EnableWebSecurity
+@PropertySource("classpath:application.properties")
 public class SecurityConfiguration {
+
+    @Value("${props.security.username}")
+    private String memUserName;
+
+    @Value("${props.security.password}")
+    private String memPassword;
 
     @Autowired
     public void authConfigure(AuthenticationManagerBuilder auth,
@@ -31,8 +40,8 @@ public class SecurityConfiguration {
         auth.authenticationProvider(provider);
 
         auth.inMemoryAuthentication()
-                .withUser("mem_user")
-                .password(passwordEncoder.encode("password"))
+                .withUser(memUserName)
+                .password(passwordEncoder.encode(memPassword))
                 .roles("ADMIN");
     }
 
@@ -66,7 +75,7 @@ public class SecurityConfiguration {
         }
     }
 
-//    @Configuration
+    //    @Configuration
 //    @Order(1)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
         @Override

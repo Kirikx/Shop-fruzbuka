@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="fragments/general.html :: head"> </head>
 
 <body class="bg-light">
@@ -12,7 +12,7 @@
         <h2 class="mb-4">Category list</h2>
         <div class="card mb-4">
             <div class="card-header">
-                <a class="btn btn-primary" href="category/create">Add Brand</a>
+                <a class="btn btn-primary" href="category/create">Add category</a>
             </div>
             <div class="card-body">
                 <table id="example" class="table table-hover" cellspacing="0" width="100%">
@@ -38,9 +38,9 @@
                         <td th:text="${category.name}">name</td>
                         <td th:text="${category.description}">description</td>
                         <td>
-                            <a class="btn btn-success" th:href="@{/category/{id}(id = ${brand.id})}"><i
+                            <a class="btn btn-success" th:href="@{/category/{id}(id = ${category.id})}"><i
                                     class="fas fa-edit"></i></a>
-                            <form class="d-inline" th:action="@{/category/{id}/delete(id = ${brand.id})}" th:method="delete">
+                            <form class="d-inline" th:action="@{/category/{id}/delete(id = ${category.id})}" th:method="delete">
                                 <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                             </form>
                         </td>

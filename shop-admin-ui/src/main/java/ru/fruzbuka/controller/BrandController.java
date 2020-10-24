@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.fruzbuka.persist.entity.Brand;
-import ru.fruzbuka.persist.entity.User;
 import ru.fruzbuka.service.BrandService;
 
 import javax.validation.Valid;
@@ -31,8 +30,8 @@ public class BrandController {
     @GetMapping("/create")
     public String createUser(Model model) {
         logger.info("Create brand");
-        User user = new User();
-        model.addAttribute("brand", user);
+        Brand brand = new Brand();
+        model.addAttribute("brand", brand);
         return "brand";
     }
 
