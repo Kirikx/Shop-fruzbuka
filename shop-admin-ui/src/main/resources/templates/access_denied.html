@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/general.html :: head"></head>
+
+<body class="bg-light">
+<nav th:replace="fragments/general.html :: nav"></nav>
+<div class="d-flex">
+    <div th:replace="fragments/general.html :: slidebar"></div>
+
+    <div class="content p-4">
+        <h2 class="mb-4">403 - Access is denied</h2>
+        <div class="card mb-4">
+            <div th:inline="text">Hello <span sec:authorize="isAuthenticated()"
+                                              sec:authentication="principal.username"></span>,
+                you do not have permission to access this page.
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/general.html :: scripts"></div>
+</body>
+</html>

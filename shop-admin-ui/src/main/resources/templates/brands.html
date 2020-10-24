@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/general.html :: head"> </head>
+
+<body class="bg-light">
+<nav th:replace="fragments/general.html :: nav"></nav>
+<div class="d-flex">
+    <div th:replace="fragments/general.html :: slidebar"></div>
+
+    <div class="content p-4">
+        <h2 class="mb-4">Brand list</h2>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a class="btn btn-primary" href="brand/create">Add Brand</a>
+            </div>
+            <div class="card-body">
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th scope="col" style="width: 15%">
+                            Id
+                        </th>
+                        <th scope="col" style="width: 35%">
+                            Name
+                        </th>
+                        <th scope="col" style="width: 35%">
+                            Description
+                        </th>
+                        <th scope="col" style="width: 15%">
+                            Actions
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="brand : ${brands}">
+                        <th scope="row" th:text="${brand.id}">1</th>
+                        <td th:text="${brand.name}">name</td>
+                        <td th:text="${brand.description}">description</td>
+                        <td>
+                            <a class="btn btn-success" th:href="@{/brand/{id}(id = ${brand.id})}"><i
+                                    class="fas fa-edit"></i></a>
+                            <form class="d-inline" th:action="@{/brand/{id}/delete(id = ${brand.id})}" th:method="delete">
+                                <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/general.html :: scripts"></div>
+</body>
+</html>

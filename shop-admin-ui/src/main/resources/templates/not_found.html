@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/general.html :: head"></head>
+
+<body class="bg-light">
+<nav th:replace="fragments/general.html :: nav"></nav>
+<div class="d-flex">
+    <div th:replace="fragments/general.html :: slidebar"></div>
+
+    <div class="content p-4">
+        <h2 class="mb-4">404 - Not found</h2>
+        <div class="card mb-4">
+            <h1><span th:text="${entityName}">ENTITY NAME</span> not found</h1>
+        </div>
+    </div>
+
+</div>
+<div th:replace="fragments/general.html :: scripts"></div>
+</body>
+</html>

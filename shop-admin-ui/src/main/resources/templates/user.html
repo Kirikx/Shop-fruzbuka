@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/general.html :: head"></head>
+
+<body class="bg-light">
+<nav th:replace="fragments/general.html :: nav"></nav>
+<div class="d-flex">
+    <div th:replace="fragments/general.html :: slidebar"></div>
+
+    <div class="content p-4">
+        <h2 class="mb-4">User profile</h2>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <button class="btn btn-outline-primary fa fa-angle-left" onclick="goBack()"> Go Back</button>
+            </div>
+            <div class="card-body">
+                <form id="user" th:action="@{/user/update}" method="post" th:object="${user}">
+                    <input th:type="hidden" th:field="*{id}">
+                    <div class="form-group">
+                        <label>Surname</label>
+                        <input type="text" class="form-control" th:field="*{surname}" placeholder="Enter surname">
+                        <small id="loginError" class="form-text text-error"
+                               th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Validation error</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" th:field="*{name}" placeholder="Enter name">
+                    </div>
+                    <div class="form-group">
+                        <label>Patronymic</label>
+                        <input type="text" class="form-control" th:field="*{patronymic}" placeholder="Enter patronymic">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" th:field="*{password}" placeholder="Enter password"
+                               required>
+                    </div>
+                    <div class="form-group">
+                        <label>Matching password</label>
+                        <input type="password" class="form-control" th:field="*{matchingPassword}"
+                               placeholder="Repeat password" required>
+                        <small id="passwordError" class="form-text text-error"
+                               th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Validation
+                            error</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Roles</label>
+                        <div class="form-check ml-3" th:each="role:${roles}">
+                            <label class="form-check-label">
+                                <input class="form-check-input"
+                                       th:type="checkbox"
+                                       th:name="${role.name}"
+                                       th:value="${role.name}"
+                                       th:text="${role.name}"
+                                       th:checked="${#lists.contains(user.roles, role)}">
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-white">
+                <button type="submit" class="btn btn-primary" form="user">Submit</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div th:replace="fragments/general.html :: scripts"></div>
+</body>
+</html>

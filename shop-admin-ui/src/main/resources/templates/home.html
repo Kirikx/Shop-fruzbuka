@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/general.html :: head"></head>
+
+<body class="bg-light">
+<nav th:replace="fragments/general.html :: nav"></nav>
+<div class="d-flex">
+    <div th:replace="fragments/general.html :: slidebar"></div>
+
+    <div class="content p-4">
+        <h2 class="mb-4">Home</h2>
+        <h3 class="align-items-center">Welcome! <span sec:authorize="isAuthenticated()"
+                                                      sec:authentication="principal.username"></span></h3>
+    </div>
+
+</div>
+<div th:replace="fragments/general.html :: scripts"></div>
+</body>
+</html>
