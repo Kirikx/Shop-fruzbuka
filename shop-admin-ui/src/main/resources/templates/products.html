@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="fragments/general.html :: head"></head>
 
 <body class="bg-light">
@@ -21,8 +21,11 @@
                         <th scope="col" style="width: 15%">
                             Id
                         </th>
-                        <th scope="col" style="width: 50%">
-                            Title
+                        <th scope="col" style="width: 25%">
+                            Name
+                        </th>
+                        <th scope="col" style="width: 25%">
+                            Description
                         </th>
                         <th scope="col" style="width: 20%">
                             Price
@@ -36,6 +39,7 @@
                     <tr th:each="product : ${products}">
                         <th scope="row" th:text="${product.id}">1</th>
                         <td th:text="${product.name}">Product name</td>
+                        <td th:text="${product.description}">Product description</td>
                         <td th:text="${product.prise}">Product prise</td>
                         <td>
                             <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
@@ -47,6 +51,25 @@
                         </td>
                     </tr>
                     </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                    </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

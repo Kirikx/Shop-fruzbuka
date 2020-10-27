@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="fragments/general.html :: head"></head>
 
 <body class="bg-light">
@@ -19,6 +19,10 @@
                 <form id="user" th:action="@{/user/update}" method="post" th:object="${user}">
                     <input th:type="hidden" th:field="*{id}">
                     <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group">
                         <label>Surname</label>
                         <input type="text" class="form-control" th:field="*{surname}" placeholder="Enter surname">
                         <small id="loginError" class="form-text text-error"
@@ -33,8 +37,8 @@
                         <input type="text" class="form-control" th:field="*{patronymic}" placeholder="Enter patronymic">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email" required>
+                        <label>Age</label>
+                        <input type="number" class="form-control" th:field="*{age}" placeholder="Enter age">
                     </div>
                     <div class="form-group">
                         <label>Password</label>

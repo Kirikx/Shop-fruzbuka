@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="fragments/general.html :: head"> </head>
 
 <body class="bg-light">
@@ -18,14 +18,23 @@
                 <table id="example" class="table table-hover" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th scope="col" style="width: 15%">
+                        <th scope="col" style="width: 10%">
                             Id
                         </th>
-                        <th scope="col" style="width: 35%">
+                        <th scope="col" style="width: 20%">
+                            Email
+                        </th>
+                        <th scope="col" style="width: 15%">
                             Name
                         </th>
-                        <th scope="col" style="width: 35%">
-                            Email
+                        <th scope="col" style="width: 15%">
+                            Surname
+                        </th>
+                        <th scope="col" style="width: 15%">
+                            Patronymic
+                        </th>
+                        <th scope="col" style="width: 10%">
+                            Age
                         </th>
                         <th scope="col" style="width: 15%">
                             Actions
@@ -35,8 +44,11 @@
                     <tbody>
                     <tr th:each="user : ${users}">
                         <th scope="row" th:text="${user.id}">1</th>
-                        <td th:text="${user.name}">User name</td>
                         <td th:text="${user.email}">User email</td>
+                        <td th:text="${user.name}">User name</td>
+                        <td th:text="${user.surname}">User surname</td>
+                        <td th:text="${user.patronymic}">User patronymic</td>
+                        <td th:text="${user.age}">User age</td>
                         <td>
                             <a class="btn btn-success" th:href="@{/user/{id}(id = ${user.id})}"><i
                                     class="fas fa-edit"></i></a>
@@ -48,8 +60,11 @@
                     <tfoot>
                     <tr>
                         <th>Id</th>
-                        <th>Name</th>
                         <th>Email</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Patronymic</th>
+                        <th>Age</th>
                         <th>Actions</th>
                     </tr>
                     </tfoot>

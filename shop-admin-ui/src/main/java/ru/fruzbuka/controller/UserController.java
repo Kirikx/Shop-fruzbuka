@@ -36,6 +36,7 @@ public class UserController {
     @GetMapping
     public String allUsers(Model model) {
         model.addAttribute("users", userService.getAll());
+        System.out.println(userService.getAll());
         return "users";
     }
 
