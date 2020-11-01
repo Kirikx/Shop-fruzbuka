@@ -13,7 +13,7 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", length = 32)
+    @Column(name = "name", length = 255)
     private String name;
 
     @Column(name = "prise")
@@ -24,7 +24,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
-    private Brand brandId;
+    private Brand brand;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "products_categories",
@@ -34,6 +34,12 @@ public class Product {
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "products_pictures",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "picture_id"))
+    private List<Picture> pictures;
 
     public Product() {
     }
@@ -78,12 +84,12 @@ public class Product {
         this.description = description;
     }
 
-    public Brand getBrandId() {
-        return brandId;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrandId(Brand brandId) {
-        this.brandId = brandId;
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public List<OrderItem> getOrderItems() {
@@ -100,5 +106,13 @@ public class Product {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 }

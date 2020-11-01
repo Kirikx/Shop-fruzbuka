@@ -1,8 +1,4 @@
 alter table users
-    drop column is_enable;
-GO
-
-alter table users
     drop column patronymic;
 GO
 

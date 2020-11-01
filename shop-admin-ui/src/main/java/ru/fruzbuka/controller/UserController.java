@@ -3,7 +3,6 @@ package ru.fruzbuka.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,9 +28,6 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public String allUsers(Model model) {
@@ -82,7 +78,6 @@ public class UserController {
             }
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         logger.info("Update user {} ", user);
         userService.saveOrUpdate(user);
         return "redirect:/user";
