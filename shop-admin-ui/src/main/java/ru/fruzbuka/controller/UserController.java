@@ -31,6 +31,7 @@ public class UserController {
 
     @GetMapping
     public String allUsers(Model model) {
+        model.addAttribute("activePage", "Users");
         model.addAttribute("users", userService.getAll());
         System.out.println(userService.getAll());
         return "users";
@@ -40,6 +41,7 @@ public class UserController {
     public String createUser(Model model) {
         logger.info("Create user");
         User user = new User();
+        model.addAttribute("activePage", "Users");
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAll());
         return "user";
@@ -51,13 +53,14 @@ public class UserController {
                 new NotFoundException("User " + id + " not found", "User")
         );
         logger.info("Edit user {} ", user);
+        model.addAttribute("activePage", "Users");
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAll());
         return "user";
     }
 
     @PostMapping("/update")
-    public String updateUser(@Valid User user, @RequestParam Map<String, String> form, BindingResult bindingResult) {
+    public String updateUser(Model model,  @Valid User user, @RequestParam Map<String, String> form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user";
         }
@@ -79,13 +82,15 @@ public class UserController {
         }
 
         logger.info("Update user {} ", user);
+        model.addAttribute("activePage", "Users");
         userService.saveOrUpdate(user);
         return "redirect:/user";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public String deleteUser(Model model, @PathVariable("id") Long id) {
         logger.info("Delete user by id {} ", id);
+        model.addAttribute("activePage", "Users");
         userService.deleteById(id);
         return "redirect:/user";
     }

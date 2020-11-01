@@ -23,6 +23,7 @@ public class BrandController {
 
     @GetMapping
     public String allBrands(Model model) {
+        model.addAttribute("activePage", "Brands");
         model.addAttribute("brands", brandService.getAll());
         return "brands";
     }
@@ -31,6 +32,7 @@ public class BrandController {
     public String createUser(Model model) {
         logger.info("Create brand");
         Brand brand = new Brand();
+        model.addAttribute("activePage", "Brands");
         model.addAttribute("brand", brand);
         return "brand";
     }
@@ -41,23 +43,26 @@ public class BrandController {
                 new NotFoundException("Brand " + id + " not found", "Brand")
         );
         logger.info("Edit brand {} ", brand);
+        model.addAttribute("activePage", "Brands");
         model.addAttribute("brand", brand);
         return "brand";
     }
 
     @PostMapping("/update")
-    public String updateBrand(@Valid Brand brand, BindingResult bindingResult) {
+    public String updateBrand(Model model ,@Valid Brand brand, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "brand";
         }
         logger.info("Update brand {} ", brand);
+        model.addAttribute("activePage", "Brands");
         brandService.saveOrUpdate(brand);
         return "redirect:/brand";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteBrand(@PathVariable("id") Long id) {
+    public String deleteBrand(Model model, @PathVariable("id") Long id) {
         logger.info("Delete brand by id {} ", id);
+        model.addAttribute("activePage", "Brands");
         brandService.deleteById(id);
         return "redirect:/brand";
     }

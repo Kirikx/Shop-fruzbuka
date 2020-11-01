@@ -33,6 +33,7 @@ public class ProductController {
 
     @GetMapping
     public String allProducts(Model model) {
+        model.addAttribute("activePage", "Products");
         model.addAttribute("products", productService.getAll());
         return "products";
     }
@@ -41,6 +42,7 @@ public class ProductController {
     public String createProduct(Model model) {
         logger.info("Create product");
         ProductRepr product = new ProductRepr();
+        model.addAttribute("activePage", "Products");
         model.addAttribute("product", product);
         model.addAttribute("brands", brandService.getAll());
         model.addAttribute("categories", categoryService.getAll());
@@ -53,6 +55,7 @@ public class ProductController {
                 new NotFoundException("Product " + id + " not found", "Product")
         );
         logger.info("Edit product {} ", product.getId());
+        model.addAttribute("activePage", "Products");
         model.addAttribute("product", product);
         model.addAttribute("brands", brandService.getAll());
         model.addAttribute("categories", categoryService.getAll());
@@ -60,15 +63,17 @@ public class ProductController {
     }
 
     @PostMapping("/update")
-    public String updateProduct(ProductRepr product) throws IOException {
+    public String updateProduct(Model model, ProductRepr product) throws IOException {
         logger.info("Update product {} ", product);
+        model.addAttribute("activePage", "Products");
         productService.saveOrUpdate(product);
         return "redirect:/product";
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteProduct(@PathVariable("id") Long id) {
+    public String deleteProduct(Model model, @PathVariable("id") Long id) {
         logger.info("Delete product by id {} ", id);
+        model.addAttribute("activePage", "Products");
         productService.deleteById(id);
         return "redirect:/product";
     }
