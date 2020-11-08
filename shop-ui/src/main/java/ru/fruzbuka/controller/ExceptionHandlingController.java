@@ -12,7 +12,7 @@ public class ExceptionHandlingController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView notFoundExceptionHandler(NotFoundException exception) {
-        ModelAndView modelAndView = new ModelAndView("not_found_error");
+        ModelAndView modelAndView = new ModelAndView("not_found");
         modelAndView.getModel().put("entityName", exception.getEntityName());
         return modelAndView;
     }

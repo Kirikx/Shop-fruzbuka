@@ -11,8 +11,4 @@ public interface BrandService {
     List<Brand> getAll();
 
     Optional<Brand> getById (Long id);
-
-    void saveOrUpdate(Brand brand);
-
-    void deleteById(Long id);
 }

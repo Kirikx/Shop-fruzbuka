@@ -15,14 +15,21 @@ public class PictureData {
 
     @Lob
     @Type(type = "org.hibernate.type.BinaryType") // для правильной работы PostgreSQL
-    @Column(name = "data", nullable = false, length = 33554430) //для правильной hibernate-валидации MySQL
+    @Column(name = "data", length = 33554430) //для правильной hibernate-валидации MySQL
     private byte[] data;
+
+    @Column(name = "file_name")
+    private String fileName;
 
     public PictureData() {
     }
 
     public PictureData(byte[] data) {
         this.data = data;
+    }
+
+    public PictureData(String fileName) {
+        this.fileName = fileName;
     }
 
     public Long getId() {
@@ -39,5 +46,13 @@ public class PictureData {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
