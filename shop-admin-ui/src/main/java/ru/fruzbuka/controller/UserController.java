@@ -3,7 +3,6 @@ package ru.fruzbuka.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,11 +29,9 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @GetMapping
     public String allUsers(Model model) {
+        model.addAttribute("activePage", "Users");
         model.addAttribute("users", userService.getAll());
         System.out.println(userService.getAll());
         return "users";
@@ -44,6 +41,7 @@ public class UserController {
     public String createUser(Model model) {
         logger.info("Create user");
         User user = new User();
+        model.addAttribute("activePage", "Users");
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAll());
         return "user";
@@ -55,13 +53,14 @@ public class UserController {
                 new NotFoundException("User " + id + " not found", "User")
         );
         logger.info("Edit user {} ", user);
+        model.addAttribute("activePage", "Users");
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAll());
         return "user";
     }
 
     @PostMapping("/update")
-    public String updateUser(@Valid User user, @RequestParam Map<String, String> form, BindingResult bindingResult) {
+    public String updateUser(Model model,  @Valid User user, @RequestParam Map<String, String> form, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "user";
         }
@@ -82,15 +81,16 @@ public class UserController {
             }
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         logger.info("Update user {} ", user);
+        model.addAttribute("activePage", "Users");
         userService.saveOrUpdate(user);
         return "redirect:/user";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public String deleteUser(Model model, @PathVariable("id") Long id) {
         logger.info("Delete user by id {} ", id);
+        model.addAttribute("activePage", "Users");
         userService.deleteById(id);
         return "redirect:/user";
     }

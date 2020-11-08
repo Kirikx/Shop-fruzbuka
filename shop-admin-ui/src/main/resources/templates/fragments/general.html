@@ -11,13 +11,13 @@
     <link rel="stylesheet" th:href="@{/css/datatables.min.css}">
     <link rel="stylesheet" th:href="@{/css/fullcalendar.min.css}">
 
-    <title>BootAdmin</title>
+    <title>FruZbuka | Admin</title>
 </head>
 <body class="bg-light">
 
 <nav class="navbar navbar-expand navbar-dark bg-primary" th:fragment="nav">
     <a class="sidebar-toggle mr-3" th:href="@{/}"><i class="fa fa-bars"></i></a>
-    <a class="navbar-brand" th:href="@{/}">BootAdmin</a>
+    <a class="navbar-brand" th:href="@{/}">FruZbuka Admin</a>
 
     <div class="navbar-collapse collapse">
         <ul class="navbar-nav ml-auto">
@@ -46,25 +46,25 @@
 <div class="d-flex">
     <div class="sidebar sidebar-dark bg-dark" th:fragment="slidebar">
         <ul class="list-unstyled">
-            <li>
+            <li th:classappend="${activePage == 'Users' or activePage == 'Roles'} ? active">
                 <a href="#sm_expand_1" data-toggle="collapse">
                     <i class="fa fa-fw fa-link"></i> Users and roles
                 </a>
                 <ul id="sm_expand_1" class="list-unstyled collapse">
-                    <li><a th:href="@{/user}">Users</a></li>
-                    <li><a th:href="@{/role}">Roles</a></li>
+                    <li th:classappend="${activePage == 'Users'} ? active"><a th:href="@{/user}">Users</a></li>
+                    <li th:classappend="${activePage == 'Roles'} ? active"><a th:href="@{/role}">Roles</a></li>
                 </ul>
             </li>
-            <li><a th:href="@{/product}"><i class="fa fa-fw fa-link"></i> Products</a></li>
-            <li><a th:href="@{/brand}"><i class="fa fa-fw fa-link"></i> Brands</a></li>
-            <li><a th:href="@{/category}"><i class="fa fa-fw fa-link"></i> Categories</a></li>
-            <li>
+            <li th:classappend="${activePage == 'Products'} ? active"><a th:href="@{/product}"><i class="fa fa-fw fa-link"></i> Products</a></li>
+            <li th:classappend="${activePage == 'Brands'} ? active"><a th:href="@{/brand}"><i class="fa fa-fw fa-link"></i> Brands</a></li>
+            <li th:classappend="${activePage == 'Categories'} ? active"><a th:href="@{/category}"><i class="fa fa-fw fa-link"></i> Categories</a></li>
+            <li th:classappend="${activePage == 'Orders' or activePage == 'OrderItems'} ? active">
                 <a href="#sm_expand_2" data-toggle="collapse">
                     <i class="fa fa-fw fa-link"></i> Orders and items
                 </a>
                 <ul id="sm_expand_2" class="list-unstyled collapse">
-                    <li><a th:href="@{/order}">Orders</a></li>
-                    <li><a th:href="@{/order-item}">Order items</a></li>
+                    <li th:classappend="${activePage == 'Orders'} ? active"><a th:href="@{/order}">Orders</a></li>
+                    <li th:classappend="${activePage == 'OrderItems'} ? active"><a th:href="@{/order-item}">Order items</a></li>
                 </ul>
             </li>
         </ul>

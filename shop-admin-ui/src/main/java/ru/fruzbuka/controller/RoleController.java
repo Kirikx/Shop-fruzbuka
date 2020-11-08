@@ -23,6 +23,7 @@ public class RoleController {
 
     @GetMapping
     public String allRoles(Model model) {
+        model.addAttribute("activePage", "Roles");
         model.addAttribute("roles", roleService.getAll());
         return "roles";
     }
@@ -31,6 +32,7 @@ public class RoleController {
     public String createRole(Model model) {
         logger.info("Create role");
         Role role = new Role();
+        model.addAttribute("activePage", "Roles");
         model.addAttribute("role", role);
         return "role";
     }
@@ -41,23 +43,26 @@ public class RoleController {
                 new NotFoundException("Role " + id + " not found", "Role")
         );
         logger.info("Edit role {} ", role);
+        model.addAttribute("activePage", "Roles");
         model.addAttribute("role", role);
         return "role";
     }
 
     @PostMapping("/update")
-    public String updateRole(@Valid Role role, BindingResult bindingResult) {
+    public String updateRole(Model model, @Valid Role role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "role";
         }
         logger.info("Update role {} ", role);
+        model.addAttribute("activePage", "Roles");
         roleService.saveOrUpdate(role);
         return "redirect:/role";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteRole(@PathVariable("id") Long id) {
+    public String deleteRole(Model model, @PathVariable("id") Long id) {
         logger.info("Delete role by id {} ", id);
+        model.addAttribute("activePage", "Roles");
         roleService.deleteById(id);
         return "redirect:/role";
     }

@@ -11,7 +11,7 @@ create table products
 (
     id          bigint         not null auto_increment,
     prise       decimal(19, 2) not null,
-    name        varchar(32)    not null,
+    name        varchar(255)    not null,
     description varchar(2048),
     brand_id    bigint,
     primary key (id)

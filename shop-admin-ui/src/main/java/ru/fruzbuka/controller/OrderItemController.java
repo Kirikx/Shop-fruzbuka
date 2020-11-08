@@ -23,6 +23,7 @@ public class OrderItemController {
 
     @GetMapping
     public String allOrderItems(Model model) {
+        model.addAttribute("activePage", "OrderItems");
         model.addAttribute("orderItems", orderItemService.getAll());
         return "order_items";
     }
@@ -31,6 +32,7 @@ public class OrderItemController {
     public String creatOrderItem(Model model) {
         logger.info("Create orderItem");
         OrderItem orderItem = new OrderItem();
+        model.addAttribute("activePage", "OrderItems");
         model.addAttribute("orderItem", orderItem);
         return "order_item";
     }
@@ -41,20 +43,23 @@ public class OrderItemController {
                 new NotFoundException("Order item " + id + " not found", "OrderItem")
         );
         logger.info("Edit order item {} ", orderItem);
+        model.addAttribute("activePage", "OrderItems");
         model.addAttribute("orderItem", orderItem);
         return "order_item";
     }
 
     @PostMapping("/update")
-    public String updateOrderItem(OrderItem orderItem) {
+    public String updateOrderItem(Model model, OrderItem orderItem) {
         logger.info("Update order item {} ", orderItem);
+        model.addAttribute("activePage", "OrderItems");
         orderItemService.saveOrUpdate(orderItem);
         return "redirect:/order_item";
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteOrderItem(@PathVariable("id") Long id) {
+    public String deleteOrderItem(Model model, @PathVariable("id") Long id) {
         logger.info("Delete order item by id {} ", id);
+        model.addAttribute("activePage", "OrderItems");
         orderItemService.deleteById(id);
         return "redirect:/order_item";
     }

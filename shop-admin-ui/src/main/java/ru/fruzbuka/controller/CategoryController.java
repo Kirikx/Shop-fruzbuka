@@ -23,6 +23,7 @@ public class CategoryController {
 
     @GetMapping
     public String allCategories(Model model) {
+        model.addAttribute("activePage", "Categories");
         model.addAttribute("categories", categoryService.getAll());
         return "categories";
     }
@@ -31,6 +32,7 @@ public class CategoryController {
     public String createCategory(Model model) {
         logger.info("Create category");
         Category category = new Category();
+        model.addAttribute("activePage", "Categories");
         model.addAttribute("category", category);
         return "category";
     }
@@ -41,23 +43,26 @@ public class CategoryController {
                 new NotFoundException("category " + id + " not found", "category")
         );
         logger.info("Edit category {} ", category);
+        model.addAttribute("activePage", "Categories");
         model.addAttribute("category", category);
         return "category";
     }
 
     @PostMapping("/update")
-    public String updateCategory(@Valid Category category, BindingResult bindingResult) {
+    public String updateCategory(Model model, @Valid Category category, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "category";
         }
         logger.info("Update category {} ", category);
+        model.addAttribute("activePage", "Categories");
         categoryService.saveOrUpdate(category);
         return "redirect:/category";
     }
 
     @DeleteMapping("/{id}/delete")
-    public String deleteCategory(@PathVariable("id") Long id) {
+    public String deleteCategory(Model model, @PathVariable("id") Long id) {
         logger.info("Delete category by id {} ", id);
+        model.addAttribute("activePage", "Categories");
         categoryService.deleteById(id);
         return "redirect:/category";
     }

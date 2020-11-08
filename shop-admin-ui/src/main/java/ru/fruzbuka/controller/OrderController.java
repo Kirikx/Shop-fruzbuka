@@ -23,6 +23,7 @@ public class OrderController {
 
     @GetMapping
     public String allOrders(Model model) {
+        model.addAttribute("activePage", "Orders");
         model.addAttribute("orders", orderService.getAll());
         return "orders";
     }
@@ -31,6 +32,7 @@ public class OrderController {
     public String creatOorder(Model model) {
         logger.info("Create order");
         Order order = new Order();
+        model.addAttribute("activePage", "Orders");
         model.addAttribute("order", order);
         return "order";
     }
@@ -41,20 +43,23 @@ public class OrderController {
                 new NotFoundException("Order " + id + " not found", "Order")
         );
         logger.info("Edit order {} ", order);
+        model.addAttribute("activePage", "Orders");
         model.addAttribute("order", order);
         return "order";
     }
 
     @PostMapping("/update")
-    public String updateOrder(Order order) {
+    public String updateOrder(Model model, Order order) {
         logger.info("Update order {} ", order);
+        model.addAttribute("activePage", "Orders");
         orderService.saveOrUpdate(order);
         return "redirect:/order";
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteOrder(@PathVariable("id") Long id) {
+    public String deleteOrder(Model model, @PathVariable("id") Long id) {
         logger.info("Delete order by id {} ", id);
+        model.addAttribute("activePage", "Orders");
         orderService.deleteById(id);
         return "redirect:/order";
     }

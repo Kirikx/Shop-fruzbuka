@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:insert="fragments/general.html :: head">
     <style>
         .login-form {
@@ -50,9 +50,9 @@
                             You have been logged out.
                         </div>
                     </div>
-                    <form action="/mvc-app/login" method="post">
+                    <form th:action="@{/login}" method="post">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username" name="username" required>
+                            <input type="email" class="form-control" placeholder="Email" name="username" required>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="Password" name="password" required>
