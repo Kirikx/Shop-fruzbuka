@@ -2,15 +2,14 @@ package ru.fruzbuka.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.fruzbuka.controller.NotFoundException;
 import ru.fruzbuka.controller.repr.ProductRepr;
 import ru.fruzbuka.persist.entity.Picture;
-import ru.fruzbuka.persist.entity.PictureData;
 import ru.fruzbuka.persist.entity.Product;
 import ru.fruzbuka.persist.repo.ProductRepository;
+import ru.fruzbuka.service.PictureService;
 import ru.fruzbuka.service.ProductService;
 
 import javax.transaction.Transactional;
@@ -24,8 +23,14 @@ public class ProductServiceImpl implements ProductService {
 
     private final static Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
-    @Autowired
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    private final PictureService pictureService;
+
+    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService) {
+        this.productRepository = productRepository;
+        this.pictureService = pictureService;
+    }
 
     @Transactional
     @Override
@@ -60,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
                 product.getPictures().add(new Picture(
                         newPicture.getOriginalFilename(),
                         newPicture.getContentType(),
-                        new PictureData(newPicture.getBytes())));
+                        pictureService.createPictureData(newPicture.getBytes())));
             }
         }
         productRepository.save(product);
