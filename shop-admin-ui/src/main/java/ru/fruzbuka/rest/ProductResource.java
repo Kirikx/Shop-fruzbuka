@@ -5,7 +5,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fruzbuka.controller.NotFoundException;
+import ru.fruzbuka.exceptions.NotFoundException;
 import ru.fruzbuka.persist.entity.Product;
 import ru.fruzbuka.persist.repo.ProductRepository;
 

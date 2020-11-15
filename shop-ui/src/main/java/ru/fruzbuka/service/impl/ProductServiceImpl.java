@@ -2,7 +2,7 @@ package ru.fruzbuka.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.fruzbuka.controller.aspect.TrackTime;
+import ru.fruzbuka.aspect.TrackTime;
 import ru.fruzbuka.controller.repr.ProductRepr;
 import ru.fruzbuka.persist.repo.ProductRepository;
 import ru.fruzbuka.service.ProductService;
@@ -23,8 +23,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    @Override
     @TrackTime
+    @Override
     public List<ProductRepr> getAll() {
         return productRepository.findAll()
                 .stream().map(ProductRepr::new)
@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    @Override
     @TrackTime
+    @Override
     public Optional<ProductRepr> getById(Long id) {
         return productRepository.findById(id)
                 .map(ProductRepr::new);

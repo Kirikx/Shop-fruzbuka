@@ -6,7 +6,7 @@ services:
       #      Монтируем внешнюю папку для хранения данных
       - ./.mysql-data/db:/var/lib/mysql
       #      Инициализация БД из дампа из папки ./sqlinit при старте
-#      - ./sqlinit:/docker-entrypoint-initdb.d
+    #      - ./sqlinit:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
     environment:
@@ -14,3 +14,18 @@ services:
       MYSQL_DATABASE: fruzbuka_db
       MYSQL_USER: user
       MYSQL_PASSWORD: 12345678
+
+  redis:
+    image: 'docker.io/bitnami/redis:6.0-debian-10'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
+    volumes:
+      - 'redis_data:/bitnami/redis/data'
+
+volumes:
+  redis_data:
+    driver: local

@@ -3,7 +3,7 @@ package ru.fruzbuka.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import ru.fruzbuka.controller.InternalServerException;
+import ru.fruzbuka.exceptions.ServerInternalException;
 import ru.fruzbuka.persist.entity.Picture;
 import ru.fruzbuka.persist.entity.PictureData;
 import ru.fruzbuka.persist.repo.PictureRepository;
@@ -46,7 +46,7 @@ public class PictureServiceFileImpl implements PictureService {
                         return Files.readAllBytes(path);
                     } catch (IOException ex) {
                         log.error("Can`t read picture file ", ex);
-                        throw new InternalServerException(ex);
+                        throw new ServerInternalException(ex);
                     }
                 });
     }

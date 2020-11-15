@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.fruzbuka.controller.repr.ProductRepr;
+import ru.fruzbuka.exceptions.NotFoundException;
 import ru.fruzbuka.service.BrandService;
 import ru.fruzbuka.service.CategoryService;
 import ru.fruzbuka.service.ProductService;
@@ -17,14 +17,16 @@ import ru.fruzbuka.service.ProductService;
 @RequestMapping("/")
 public class ProductController {
 
-    @Autowired
     private ProductService productService;
-
-    @Autowired
     private BrandService brandService;
+    private CategoryService categoryService;
 
     @Autowired
-    private CategoryService categoryService;
+    public ProductController(ProductService productService, BrandService brandService, CategoryService categoryService) {
+        this.productService = productService;
+        this.brandService = brandService;
+        this.categoryService = categoryService;
+    }
 
     @GetMapping()
     public String allProducts(Model model) {
@@ -38,11 +40,9 @@ public class ProductController {
     public String viewProduct(@PathVariable("id") Long id, Model model) {
         model.addAttribute("categories", categoryService.getAll());
         model.addAttribute("brands", brandService.getAll());
-        ProductRepr product = productService.getById(id).orElseThrow(() ->
-                new NotFoundException("Product " + id + " not found", "Product")
-        );
-        log.info("View product {} ", product.getId());
-        model.addAttribute("product", product);
+        model.addAttribute("product", productService.getById(id).orElseThrow(() ->
+                new NotFoundException("Product " + id + " not found", "Product")));
+        log.info("View product {} ", id);
         return "shop-details";
     }
 }

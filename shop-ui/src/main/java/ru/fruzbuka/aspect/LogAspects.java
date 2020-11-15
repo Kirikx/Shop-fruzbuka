@@ -1,4 +1,4 @@
-package ru.fruzbuka.controller.aspect;
+package ru.fruzbuka.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -18,7 +18,7 @@ public class LogAspects {
         log.info("Call of {}", joinPoint);
     }
 
-    @Around("@annotation(ru.fruzbuka.controller.aspect.TrackTime)")
+    @Around("@annotation(ru.fruzbuka.aspect.TrackTime)")
     public Object trackTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
 

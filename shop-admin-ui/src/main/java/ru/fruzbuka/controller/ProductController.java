@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.fruzbuka.controller.repr.ProductRepr;
+import ru.fruzbuka.exceptions.NotFoundException;
 import ru.fruzbuka.service.BrandService;
 import ru.fruzbuka.service.CategoryService;
 import ru.fruzbuka.service.ProductService;
