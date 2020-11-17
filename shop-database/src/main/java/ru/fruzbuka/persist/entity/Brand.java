@@ -1,10 +1,11 @@
 package ru.fruzbuka.persist.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "brands")
-public class Brand {
+public class Brand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

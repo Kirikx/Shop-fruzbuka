@@ -1,14 +1,12 @@
 package ru.fruzbuka.controller.repr;
 
-import org.springframework.web.multipart.MultipartFile;
-import ru.fruzbuka.persist.entity.Brand;
 import ru.fruzbuka.persist.entity.Category;
+import ru.fruzbuka.persist.entity.Picture;
 import ru.fruzbuka.persist.entity.Product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ProductRepr implements Serializable {
@@ -21,13 +19,11 @@ public class ProductRepr implements Serializable {
 
     private BigDecimal price;
 
-    private List<Category> category;
+    private List<String> category;
 
-    private Brand brand;
+    private String brand;
 
-    private List<PictureRepr> pictures;
-
-    private MultipartFile[] newPictures;
+    private List<Long> pictureIds;
 
     public ProductRepr() {
     }
@@ -37,10 +33,11 @@ public class ProductRepr implements Serializable {
         this.name = product.getName();
         this.description = product.getDescription();
         this.price = product.getPrise();
-        this.category = product.getCategories();
-        this.brand = product.getBrand();
-        this.pictures = product.getPictures().stream()
-                .map(PictureRepr::new)
+        this.category = product.getCategories().stream()
+                .map(Category::getName).collect(Collectors.toList());
+        this.brand = product.getBrand().getName();
+        this.pictureIds = product.getPictures().stream()
+                .map(Picture::getId)
                 .collect(Collectors.toList());
     }
 
@@ -76,48 +73,40 @@ public class ProductRepr implements Serializable {
         this.price = price;
     }
 
-    public List<Category> getCategory() {
+    public List<String> getCategory() {
         return category;
     }
 
-    public void setCategory(List<Category> category) {
+    public void setCategory(List<String> category) {
         this.category = category;
     }
 
-    public Brand getBrand() {
+    public String getBrand() {
         return brand;
     }
 
-    public void setBrand(Brand brand) {
+    public void setBrand(String brand) {
         this.brand = brand;
     }
 
-    public List<PictureRepr> getPictures() {
-        return pictures;
+    public List<Long> getPictureIds() {
+        return pictureIds;
     }
 
-    public void setPictures(List<PictureRepr> pictures) {
-        this.pictures = pictures;
+    public void setPictureIds(List<Long> pictureIds) {
+        this.pictureIds = pictureIds;
     }
 
-    public MultipartFile[] getNewPictures() {
-        return newPictures;
-    }
-
-    public void setNewPictures(MultipartFile[] newPictures) {
-        this.newPictures = newPictures;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductRepr that = (ProductRepr) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        ProductRepr that = (ProductRepr) o;
+//        return Objects.equals(id, that.id);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
 }

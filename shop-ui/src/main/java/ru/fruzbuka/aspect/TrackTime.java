@@ -1,4 +1,4 @@
-package ru.fruzbuka.controller.aspect;
+package ru.fruzbuka.aspect;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

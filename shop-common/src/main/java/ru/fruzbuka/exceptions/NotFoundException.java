@@ -1,4 +1,4 @@
-package ru.fruzbuka.controller;
+package ru.fruzbuka.exceptions;
 
 public class NotFoundException extends RuntimeException {
     private String entityName;

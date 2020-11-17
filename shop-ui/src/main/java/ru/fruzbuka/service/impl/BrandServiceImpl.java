@@ -2,7 +2,7 @@ package ru.fruzbuka.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.fruzbuka.controller.aspect.TrackTime;
+import ru.fruzbuka.aspect.TrackTime;
 import ru.fruzbuka.persist.entity.Brand;
 import ru.fruzbuka.persist.repo.BrandRepository;
 import ru.fruzbuka.service.BrandService;
