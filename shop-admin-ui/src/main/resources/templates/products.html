@@ -27,8 +27,11 @@
                         <th scope="col" style="width: 25%">
                             Description
                         </th>
-                        <th scope="col" style="width: 20%">
+                        <th scope="col" style="width: 10%">
                             Price
+                        </th>
+                        <th scope="col" style="width: 10%">
+                            Quantity
                         </th>
                         <th scope="col" style="width: 15%">
                             Actions
@@ -40,7 +43,8 @@
                         <th scope="row" th:text="${product.id}">1</th>
                         <td th:text="${product.name}">Product name</td>
                         <td th:text="${product.description}">Product description</td>
-                        <td th:text="${product.prise}">Product prise</td>
+                        <td th:text="${product.price}">Product prise</td>
+                        <td th:text="${product.count}">Product count</td>
                         <td>
                             <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
                                     class="fas fa-edit"></i></a>
