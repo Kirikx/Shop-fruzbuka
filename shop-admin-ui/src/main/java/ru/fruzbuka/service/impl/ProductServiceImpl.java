@@ -11,12 +11,14 @@ import ru.fruzbuka.persist.entity.Product;
 import ru.fruzbuka.persist.repo.ProductRepository;
 import ru.fruzbuka.service.PictureService;
 import ru.fruzbuka.service.ProductService;
+import ru.fruzbuka.service.StockService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -27,15 +29,27 @@ public class ProductServiceImpl implements ProductService {
 
     private final PictureService pictureService;
 
-    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService) {
+    private final StockService stockService;
+
+    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, StockService stockService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
+        this.stockService = stockService;
     }
+
+//    @Transactional
+//    @Override
+//    public List<Product> getAll() {
+//        return productRepository.findAll();
+//    }
 
     @Transactional
     @Override
-    public List<Product> getAll() {
-        return productRepository.findAll();
+    public List<ProductRepr> getAll() {
+        return productRepository.findAll().stream()
+                .map(ProductRepr::new)
+                .peek(pr -> pr.setCount(stockService.getStockById(pr.getId()).getCount()))
+                .collect(Collectors.toList());
     }
 
     @Transactional
