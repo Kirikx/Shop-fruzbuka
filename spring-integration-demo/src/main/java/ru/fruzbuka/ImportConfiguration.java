@@ -2,18 +2,25 @@ package ru.fruzbuka;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.core.MessageSource;
+import org.springframework.integration.dsl.ConsumerEndpointSpec;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.FileReadingMessageSource;
 import org.springframework.integration.file.FileWritingMessageHandler;
 import org.springframework.integration.file.transformer.FileToStringTransformer;
+import org.springframework.integration.jpa.dsl.Jpa;
+import org.springframework.integration.jpa.dsl.JpaUpdatingOutboundEndpointSpec;
+import org.springframework.integration.jpa.support.PersistMode;
 import org.springframework.messaging.MessageHandler;
+import ru.fruzbuka.persist.entity.Brand;
 
+import javax.persistence.EntityManagerFactory;
 import java.io.File;
 
 @Configuration
@@ -27,8 +34,8 @@ public class ImportConfiguration {
     @Value("${dest.directory.path}")
     private String descDirectoryPath;
 
-//    @Autowired
-//    private EntityManagerFactory entityManagerFactory;
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     @Bean
     public MessageSource<File> sourceDirectory() {
@@ -46,21 +53,26 @@ public class ImportConfiguration {
         return handler;
     }
 
-//    @Bean
-//    public JpaUpdatingOutboundEndpointSpec jpaPersistHandler() {
-//        return Jpa.outboundAdapter(this.entityManagerFactory)
-//                .entityClass(Brand.class)
-//                .persistMode(PersistMode.PERSIST);
-//    }
+    @Bean
+    public JpaUpdatingOutboundEndpointSpec jpaPersistHandler() {
+        return Jpa.outboundAdapter(this.entityManagerFactory)
+                .entityClass(Brand.class)
+                .persistMode(PersistMode.PERSIST);
+    }
 
     @Bean
     public IntegrationFlow fileMoveFlow() {
         return IntegrationFlows.from(sourceDirectory(), conf -> conf.poller(Pollers.fixedDelay(2000)))
                 .filter(msg -> ((File) msg).getName().endsWith(".txt"))
                 .transform(new FileToStringTransformer())
-                //.split(s -> s.delimiters("\n"))
-                .<String, String>transform(String::toUpperCase)
-                .handle(destDirectory())
+                .split(s -> s.delimiters("\n"))
+                .<String, Brand>transform(text -> {
+                    logger.info("New brand '{}'", text);
+                    Brand brand = new Brand();
+                    brand.setName(text);
+                    return brand;
+                })
+                .handle(jpaPersistHandler(), ConsumerEndpointSpec::transactional)
                 .get();
     }
 

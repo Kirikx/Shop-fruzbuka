@@ -2,6 +2,7 @@ package ru.fruzbuka.persist.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -18,7 +19,14 @@ public class Category implements Serializable {
     @Column(name = "description", length = 255)
     private String description;
 
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
+
     public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -43,5 +51,13 @@ public class Category implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

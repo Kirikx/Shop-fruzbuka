@@ -2,7 +2,9 @@ package ru.fruzbuka.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.fruzbuka.controller.repr.ProductRepr;
 import ru.fruzbuka.exceptions.NotFoundException;
@@ -13,15 +15,15 @@ import ru.fruzbuka.service.PictureService;
 import ru.fruzbuka.service.ProductService;
 import ru.fruzbuka.service.StockService;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService, Serializable {
 
     private final static Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -31,17 +33,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final StockService stockService;
 
+    @Autowired
     public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, StockService stockService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
         this.stockService = stockService;
     }
-
-//    @Transactional
-//    @Override
-//    public List<Product> getAll() {
-//        return productRepository.findAll();
-//    }
 
     @Transactional
     @Override

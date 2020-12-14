@@ -23,12 +23,12 @@
     </properties>
 
     <modules>
+        <module>shop-common</module>
         <module>shop-database</module>
         <module>shop-admin-ui</module>
         <module>shop-ui</module>
         <module>shop-picture-service</module>
         <module>shop-picture-service-app</module>
-        <module>shop-common</module>
         <module>spring-eureka</module>
         <module>spring-zuul</module>
         <module>spring-cloud-config</module>
